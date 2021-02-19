@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="main-container">
+      <h1>Welcome to Grey Login System</h1>
+      <div class="container">
+        <h3 class="display" id="display">You can login</h3>
+        <div class="form-container">
+          <form class="form-val" autocomplete="off">
+            <input
+              type="text"
+              id="name"
+              class="form-input form-name block"
+              placeholder="Enter Your name"
+            />
+            <input
+              type="text"
+              id="email"
+              class="form-input"
+              placeholder="Enter Your Email"
+            />
+            <input
+              type="password"
+              id="password"
+              class="form-input"
+              placeholder="Enter Your Password"
+              autocomplete="off"
+            />
+          </form>
+        </div>
+        <div class="button-container">
+          <button class="sign-up-btn block" id="sign-up-btn">Sign Up</button>
+          <button class="sign-in-btn" id="sign-in-btn">Sign In</button>
+          <button class="switch-op" id="switch-op">Switch</button>
+        </div>
+        <div class="message" id="message">Hello</div>
+      </div>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
