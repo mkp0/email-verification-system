@@ -13,6 +13,9 @@ let isSignIn = true;
 
 switchop.addEventListener("click", (e) => {
   e.preventDefault();
+  email.value = "";
+  namee.value = "";
+  pass.value = "";
   if (isSignIn) {
     signin.classList.add("block");
     signup.classList.remove("block");

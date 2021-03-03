@@ -3,10 +3,11 @@ const router = express.Router();
 const User = require("../models/user");
 const checkpres = require("../middleware/alreadyPresentMiddlewere");
 const nodemailer = require("nodemailer");
-const keys = require("../keys");
+const dotenv = require("dotenv");
 let jwt = require("jsonwebtoken");
 const validateMiddlewere = require("../middleware/validationMiddlewere");
 
+dotenv.config();
 async function mailsend(token) {
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -15,7 +16,7 @@ async function mailsend(token) {
     secure: false, // true for 465, false for other ports
     auth: {
       user: "shubhamprathapp@gmail.com", // generated ethereal user
-      pass: keys.gmailPassword, // generated ethereal password
+      pass: process.env.EMAIL_PASSWORD, // generated ethereal password
     },
   });
 
@@ -44,7 +45,7 @@ router.post("/signup", checkpres, validateMiddlewere, (req, res) => {
   };
   const user = new User(data);
 
-  jwt.sign(data, keys.jwtkey, (err, token) => {
+  jwt.sign(data, process.env.JWTKEY, (err, token) => {
     user
       .save()
       .then((data) => {
@@ -59,7 +60,7 @@ router.post("/signup", checkpres, validateMiddlewere, (req, res) => {
 });
 
 router.get("/:token", async (req, res) => {
-  let decoded = jwt.verify(req.params.token, keys.jwtkey);
+  let decoded = jwt.verify(req.params.token, process.env.JWTKEY);
   const doc = await User.findOneAndUpdate(
     { email: decoded.email },
     { isVerified: true },
@@ -85,6 +86,10 @@ router.post("/login", (req, res) => {
     if (!val.isVerified) {
       return res.status(400).json({ err: "Verify Your mail to login" });
     }
+    if (val.password !== data.password) {
+      return res.status(400).json({ err: "Password Wrong" });
+    }
+
     res.json({
       name: val.name,
       email: val.email,
